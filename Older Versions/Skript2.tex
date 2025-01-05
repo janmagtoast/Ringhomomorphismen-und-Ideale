@@ -1,0 +1,363 @@
+\documentclass{article}
+
+\setlength{\parindent}{0pt}
+
+\usepackage{amssymb, amsmath, amsthm, fullpage, enumitem, hyperref}
+\hypersetup{colorlinks=true, urlcolor=blue}
+\usepackage[german]{babel}
+
+\newtheorem*{satz}{Satz}
+\newtheorem*{cor}{Korollar}
+\newtheorem*{prop}{Proposition}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{zb}{Beispiel}
+
+\theoremstyle{remark}
+\newtheorem*{anm}{Anmerkung}
+
+\begin{document}
+
+
+\title{\bf{Ringhomomorphismen und Ideale}}
+\author{Jan Wiesemann}
+\date{Wintersemester 2024/25}
+\maketitle
+
+Dieses Skript wurde für einen Proseminarvortrag in meinem dritten Fachsemester für Mathematik verfasst.
+
+\section{Ringe}
+
+\begin{definition}[asso. Ring] Wir nennen $(R,+,\cdot)$ einen \emph{assoziativen Ring}, wenn gilt:
+\begin{enumerate}[label=(\roman*)]
+    \item $(R,+)$ ist abelsche Gruppe.
+    \item $(R,\cdot)$ ist Monoid.
+    \item $a\cdot(b+c)=(a\cdot b)+(a\cdot c)$ und $(a+b)\cdot c=(a\cdot c)+(b\cdot c)$gelten für alle
+        $a,b,c\in R$.
+\end{enumerate}
+\end{definition}
+
+Die eingebettete abelsche Gruppe schreibt man auch oft als $R^+$.
+
+\begin{definition}[komm. Ring] Ist $R$ ein Ring wie oben und $(R,\cdot)$ kommutativ dann nennen wir $R$
+    einen \emph{kommutativen Ring}.
+\end{definition}
+
+\begin{anm} Bei kommutativen Ringen reicht es nur eins der Distributivgesetze zu fordern.
+\end{anm}
+
+Beispiele für Ringe: \begin{itemize}
+    \item Ring der ganzen Zahlen $\mathbb{Z}$
+    \item Polynomring $R[T]$
+    \item Endliche Ringe $\mathbb{Z}\slash n\mathbb{Z}$
+    \item Der Nullring
+    \item Alle Körper $k$
+    \item $(\mathrm{Mat}_{n\times n}(R))$
+\end{itemize}
+
+Im Folgenden benutze ich den Begriff \emph{Ring} immer für einen kommutativen Ring.
+Dies ist auch in Lehrbüchern und vielen anderen Kontexten gebräuchlich.
+
+\begin{anm} Es ist außerdem noch interessant anzumerken, dass manche Authoren in der Definition nicht einmal,
+dass multiplikative neutrale Element fordern. Diese Authoren benutzen dann den Begriff \emph{Ring mit Eins},
+für das, was wir bereits als einen Ring auffassen.
+\end{anm}
+
+\newpage
+\section{Ringhomomorphismen}
+
+Wir wollen eine Abbildung, die die Ringaxiome erhält, sowie Eins- und Nullelement wieder auf dergleichen
+abbildet. Dafür fordern wir drei Eigenschaften:
+
+\begin{definition}[Ringhomomorphismus] Wir nennen $\varphi: R\to R'$ einen \emph{Ringhomomorphismus}, wenn
+folgende drei Eigenschaften erfüllt sind: \begin{enumerate}[label=(\roman*)]
+    \item $\varphi(a+b) = \varphi(a) + \varphi(b)$
+    \item $\varphi(a b) = \varphi(a)   \varphi(b)$
+    \item $\varphi(1_R) = 1_{R'}$
+\end{enumerate}
+\end{definition}
+
+Da $R^+$ eine Gruppe ist, definiert $(\mathrm i)$ einen Gruppenhomomorphismus. Somit gilt bereits
+$\varphi(0_R)=0_{R'}$. Als kleine Wiederholung hier auch noch der Beweis:
+
+Wähle $a=b=0$.
+\begin{align*}
+\varphi(0+0) &= \varphi(0)+\varphi(0) \\
+\varphi(0) &= \varphi(0)+\varphi(0) \\
+\varphi(0)-\varphi(0) &= \varphi(0)+\varphi(0)-\varphi(0) \\
+0 &= \varphi(0)
+\end{align*}
+\hfill$\square$
+
+Da $(R,\cdot)$ keine Untergruppe bildet, funktioniert dieser Beweis nicht und wir müssen die Abbildung auf das
+Einselement seperat fordern. Das einfachste Gegenbeispiel ist hierfür die Nullabbildung $\varphi(r)=0$. Sie
+erfüllt zwar $(\mathrm{i})$ und $(\mathrm{ii})$, da $0=0+0=0\times0$, jedoch gilt $(\mathrm{iii})$ nur, wenn auch
+$1_{R'}=0_{R'}$ gilt, wir also im Nullring sind. 
+
+\vspace{0.7em}
+Man kann sich schnell dazu überlegen, dass sogar beide
+Richtugen gelten. Also die Nullabbildung ist genau dann ein Ringhomomorphismus, wenn der Zielring der Nullring
+ist.
+
+\begin{anm}
+Einem wird noch öfter auffallen, dass der Nullring immer mal wieder auftaucht. Trotz seines fast schon
+trivialen Charakters hat er, ähnlich wie die Null selbst, sehr viel Relevanz in der Mathematik. Außerdem führen
+alle Ringhomomorphismen, die aus dem Nullring rausführen zwangsweise wieder in den Nullring rein. Somit bleibt
+man in ihm \emph{gefangen}, sobald man einmal in ihm landet.
+\end{anm}
+
+\begin{definition}[Isomorphismen und Automorphismen] Diese Begriffe lassen sich wie gewöhnlich definieren: \\
+Sei $\varphi: R\to R'$ ein Ringhomomorphismus.
+\begin{itemize}
+    \item Wir nennen $\varphi$ einen Isomorphismus, wenn $\varphi$ bijektiv ist, bzw. wenn eine Umkehrabbildung     $\varphi': R'\to R$ existiert. 
+    \item Wir nennen $\varphi$ einen Automorphismus, wenn $R=R'$ ist.
+\end{itemize}
+
+\end{definition}
+
+Ich war zunächst erstaunt, dass es überhaupt Ringautomorphismen gibt, die nicht die Identität sind. Immerhin
+sind sind die Bedinungen der Ringhomomorphismus deutlich strikter, als die der Gruppenhomomorphismen oder der 
+linearen Abbildung.
+
+Ein Bespiel für ein Ringautomorphismus wäre jedoch z.B. folgender:
+\[\varphi: \mathbb C\to\mathbb C; \hspace{3em} x+iy \longmapsto x-iy\]
+Den Nachweis, dass die Axiome für Ringhomomorphismen erfüllt sind, lasse ich als Hausaufgabe für den Leser.
+
+\vspace{0.7em}
+Ich hatte eben angemerkt, dass die Definition des Ringhomomorphismen sehr strikt gewählt ist. Ein Beispiel
+dafür ist folgender Satz:
+
+\begin{satz}
+Es existiert genau ein Ringhomomorphismus $\varphi: \mathbb Z \to R$. \\
+Sei ohne Einschränkungen $n\ge0$. Dann wird dieser wird definiert durch:
+\[\varphi(n)=\sum_1^n 1_R \hspace{3em} \text{und} \hspace{3em} \varphi(-n)=-\varphi(n)\]
+\end{satz}
+\begin{proof} Beweisen wir zunächst die Eindeutigkeit. Nehme an $\varphi$ sei ein beliebiger
+Ringhomomorphismus: 
+
+Nach Definition gilt $\varphi(1)=1_R$ und folglich $\varphi(n+1)=\varphi(n)+1_R$.
+Das definiert rekursiv bereits die Form für alle Zahlen in $\mathbb N_0$. Um $\varphi(n-n)=0$ zu erfüllen
+setzt man dazu noch $\varphi(-n)=-\varphi(n)$.
+
+\vspace{0.7em}
+Müssen jetzt noch zeigen, dass $\varphi$ auch wirklich ein Ringhomomorphismus ist. Dafür nehmen wir die Form,
+die wir oben aus den Ringhomomorphismus Eigenschaften gefolgert haben, nun als Definition an für unser
+Abbildung $\varphi$. Abbildung auf das Einselement ist nach Definition klar. Müssen zeigen, dass Addition und
+Multiplikation respektiert werden:
+
+$\varphi(m+1)=\varphi(m)+\varphi(1)$ und
+$\varphi(m\cdot 1)=\varphi(m)\varphi(1)$. Das nehmen wir als Induktionsstart für folgende Induktionsannahmen:
+$\varphi(m+n)=\varphi(m)+\varphi(n)$ und $\varphi(mn)=\varphi(m)\varphi(n)$. Induktionsschritt sieht dann, wie
+folgt aus:
+\begin{align*}
+    \varphi(m+(n+1)) &= \varphi((m+n)+1)    &&(\text{Assoziativität}) \\
+                     &= \varphi(m+n)+1      &&(\text{Definition von }\varphi) \\
+                     &= \varphi(m)+\varphi(n)+1 &&(\text{Induktionsvorautsetzung}) \\
+                     &= \varphi(m)+\varphi(n+1) &&(\text{Definition von }\varphi) \\
+                     \\
+    \varphi(m(n+1))  &= \varphi(mn+m)       &&(\text{Distributivgesetz von }R) \\
+                     &= \varphi(mn)+\varphi(m) &&(\text{Siehe oben}) \\
+                     &= \varphi(m)\varphi(n)+\varphi(m) &&(\text{Induktionsvorraussetzung}) \\
+                     &= \varphi(m)(\varphi(n)+1) &&(\text{Distributivgesetz von }R') \\
+                     &= \varphi(m)\varphi(n+1) &&(\text{Definition von }\varphi)
+\end{align*}
+\end{proof}
+
+Der Satz gibt einem auch die Freiheit in beliebigen Ringen mit der Notation von $\mathbb Z$ zu arbeiten, da die
+Bilder in dem Zielring eindeutig bestimmt sind.
+
+\begin{satz} [Einsetzungsprinzip] Sei $\varphi: R\to R'$ ein Ringhomomorphismus, dann existiert zu jedem
+$r' \in R'$ eine eindeutig bestimmte Fortsetzung von $\varphi$ zu $\Phi:R[T] \to R'$, die $T$ auf $r'$ abbildet
+und auf den konstanten Polynomen gleich ist zu $\varphi$.
+
+\vspace{0.7em}
+Diese Aussage gilt sogar für Multiindizes $R[T_1,...,T_n]$, wenn man das einzusetzende $r'$, als Vektor
+$(r'_1,...,r'_n)$ in $(R')^n$ auffasst.
+\end{satz}
+\textit{Beweisskizze.} Zunächst möchte ich anmerken, dass der Beweis direkt für Multiindizes funktioniert.
+Man muss lediglich alle $r'$ und $T$ als Indizevektoren auffassen.
+Die Beweisidee ist wieder ähnlich, wie bei dem letzten Beweis. Man würde erst annehmen, dass wir einen
+beliebigen Ringhomomorphismus haben, der dazu $T$ auf $r'$ abbildet und auf den konstanten Polynomen gleich mit
+$\varphi$ ist und damit dann die Eindeutigkeit zeigen.
+Danach nimmt man genau diese Form als Definition und folgert, dass diese Form einen Rinhomomorphismus definiert.
+Ich möchte hier aus Zeitgründen nur den ersten Teil des Beweis machen:
+
+\vspace{0.7em}
+Wenn man $\Phi$ Stück für Stück aufbaut, kann man sich schnell davon überzeugen, dass diese Form die einzige
+mögliche Form sein muss. Also:
+\[\Phi\Big(\sum a_i T^i\Big) = \sum \varphi(a_i) (r')^i\]
+Damit haben wir bereits eine eindeutige Form.
+
+Jetzt müsste man noch beweisen, dass $\Phi$ einen Ringhomomorphismus definiert. Wen
+es interessiert, der kann im Buch von Artin oder in meiner alten (und teilweise fehlerhaften) Version des
+Skripts nachlesen, denn dort ist der Beweis in ausführlicherer Form vorhanden.
+
+\begin{zb}
+Ein Beispiel für das Einsetzungsprinzip, ist der Wechsel des Koeffizientenrings.
+
+Sei $\varphi: R\to R'$ ein Ringhomomorphismus. Nach dem Einsetzungsprinzip existiert folgende Fortsetzung
+$\Phi:R[T]\to R'$. Und da $R'\subset R'[T]$ ein Unterring ist, können wir den Wertebereich vergrößern und
+bekommen den Ringhomomorphismus $\Phi:R[T]\to R'[T]$.
+\end{zb}
+
+Z.B. für $\mathbb Z \to\mathbb F_p$ erhalten wir:
+\[\mathbb Z[T] \to\mathbb F_p[T]; \hspace{3em} \sum_i a_i T^i \longmapsto \sum_i (a_i \text{ mod } p) T^i\]
+
+\begin{zb}
+Ein anderes Andwendungsbeispiel wäre, formal zu zeigen, dass $R[x][y]$ und $R[x,y]$ isomorph sind. Der Beweis
+ist jedoch etwas länger und deutlich nicht so interessant, wie die Tatsache an sich, dass es geht. Anschaulich
+kann man sich einfach vorstellen, dass bei $R[x][y]\to R[x,y]$ Polynome ausmultipliziert und bei
+$R[x,y]\to R[x][y]$ nach $y$ sortiert. Der Beweis spielt dann mit trivialen Inklusionsabbildungen und dem
+Einsetzungsprinzip, um es rigoros zu zeigen. Das möchte ich hier jedoch auslassen, um mich interessanteren
+Themen witmen zu können.
+\end{zb}
+
+Zum Beispiel wollen wir hier noch den Begriff des Kerns, in unserem Kontext der Ringhomomorphismen definieren:
+\begin{definition}[Kern]
+    $\mathrm{Ker}(\varphi) := \{a\in R \mid \varphi(a)=0\}$
+\end{definition}
+
+Anders als der Kern eines Gruppenhomomorphismus, der eine Untergruppe gebildet hat, bildet der Kern eines
+Ringhomomorphismus in der Regel keinen Unterring. Bei der Definition des Rings, gehört schließlich das
+Einselement dazu, und wenn dieses im Kern ist, gilt $\varphi(1)=0$. Somit sind wir entweder im Nullring, wo
+$1=0$ gilt oder unsere Abbildung erfüllt die Erhaltung des multiplikativen neutralen Element nicht.
+
+\begin{prop} Ist $a\in \mathrm{Ker}(\varphi)$ und $r\in R$, dann $ra\in \mathrm{Ker}(\varphi)$.\end{prop}
+\begin{proof} Da $a$ im Kern, gilt $\varphi(a)=0$. Es folgt:
+    \[\varphi(ra)=\varphi(r)\varphi(a)=\varphi(r)\cdot0=0\]
+\end{proof}
+Man kann sich den Kern auf eine gewisse Weise \emph{magnetisch} vorstellen, da er Ringelemente bei
+Multiplikation in den Kern zieht.
+
+\vspace{0.7em}
+Betrachten wir als Beispiel für einen Kern mal, den der Abbildung $\varphi: R[T]\to R$, die wir durch
+einsetzen von $r$ erhalten. Dieser besteht dann offensichtlich aus den Polynomen die $r$ als Nullstelle haben,
+also lässt sich der Kern definieren, durch alle Polynome, die durch $(T-r)$ teilbar sind. Somit:
+\[\mathrm{Ker}(\varphi)=(T-r)R[T]\]
+
+\newpage
+\section{Ideale}
+Diese \emph{magnetische} Eigenschaft, die wir gerade beim Kern beobachtet haben, lässt sich mit dem Begriff
+des Ideals abstrahieren.
+
+\vspace{0.7em}
+Bevor wir das tun, hier jedoch noch kurz ein paar wissenswerte Kleinigkeiten. Der Begriff des \emph{Ideals}
+kommt ursprünglich aus der Zahlentheorie, da man dort Zahlen gesucht hat, die \emph{ideal} dafür wären, die
+Eindeutigkeit von irreduziblen Elementen wiederherzustellen. Sie wurden auch \emph{ideales Element} oder
+\emph{ideale Zahlen} genannt. Was sich dann später zu dem Begriff des \emph{Ideals} entswickelt hat. Wen das
+genauer interessiert, der kann im elften Kapitel im Buch von Artin oder auf
+\href{https://de.wikipedia.org/wiki/Ideal_(Ringtheorie)#%E2%80%9EIdeale_Zahlen%E2%80%9C}{Wikipedia} nachlesen.
+
+\vspace{0.7em}
+Wollen nun das Ideal, wie man es heute kennt definieren:
+
+\begin{definition}(Ideal) Wir nennen die Teilmenge $\mathfrak a$ ein Ideal, wenn gilt:
+\begin{enumerate}[label=(\roman*)]
+    \item $\mathfrak a$ ist Untergruppe von $R^+$.
+    \item Ist $a \in \mathfrak a$ und $r\in R$, dann $ra \in \mathfrak a$.
+\end{enumerate}
+\end{definition}
+
+\begin{anm}
+Durch die Überlappung der Definition mit der Proposition, die wir gerade zum Kern hatten, kann man schnell
+feststellen, dass der Kern immer ein Ideal des Wertebereichs ist.
+\end{anm}
+
+Aus $(\mathrm i)$ folgt, dass das $\mathfrak a$ nicht leer und abgeschlossen unter Addition ist. Aus
+$(\mathrm{ii})$ folgt, dass $\mathfrak a$ auch unter Multiplikation abgeschlossen ist und das sogar mit einem
+beliebigen Ringelement $r\in R$.
+
+\vspace{0.7em}
+Mit dem wissen kann man eine äquivalente Definition definieren, die auch oft sehr von Nutzen sein kann:
+
+\begin{definition}
+$\mathfrak a$ ist nicht leer, und jede Linearkombination $\sum r_i a_i$ von elementen $a_i\in \mathfrak a$ und
+    $r_i\in R$ liegt wieder in $\mathfrak a$.
+\end{definition}
+
+Diese Definition ist besonders nützlich, da man Ideale \emph{erzeugen} kann. Dafür ist die folgende
+Schreibweise sehr üblich:
+\[(a_1,...,a_n)=\{r_1 a_1 + ... + r_n a_n \mid r_i\in R\}\]
+Kann man ein Ideal mit einem einzigen Erzeuger ausdrücken, nennt man es auch \emph{Hauptideal}. Zum Beispiel
+ist $(2,4)$ ein Hauptideal, da man es auch als $(2)$ schreiben kann.
+
+\vspace{0.7em}
+\textbf{Beispiele.}
+\begin{itemize}
+    \item triviale Ideale $(0)$ und $(1)$. Diese sind im Nullring identisch.
+    \item die ganzen Zahlen $\mathbb Z$: gerade Zahlen. Also $(2)$ in der Schreibweise.
+    \item die Gaußschen Zahlen $\mathbb Z[i]$ haben ähnliche Ideale: $(2)$, $(2i)$, $(2,2i)$
+    \item Körper $k$: Hier ist jeder Erzeuger $a\in k^\times$ \emph{übereifrig} und erzeugt direkt komplett $k$.        Da $a^{-1}$ für alle $a$ existiert können wir mit komposition von $r=a^{-1}b$ direkt jedes beliebige            $b\in k$ generieren.
+\end{itemize}
+
+\begin{anm}
+Es ist immer sinnvoll den Ring zu erwähnen über den man gerade redet, da es aus der kompakten Schreibweise
+nicht direkt klar wird. Manche Authoren bevorzugen deshalb die Schreibweise $Ra$, $aR$ oder $RaR$.
+\end{anm}
+
+Ich habe ja vohin schonmal angemerkt, dass jeder Körper ein Ring ist. Diese Aussage, kann man mit dem
+Begriff des Ideals präzisieren:
+
+\begin{satz}
+Ein Ring $R$ ist genau dann ein Körper, wenn er exakt zwei Ideale besitzt.
+\end{satz}
+\begin{proof} $"\Rightarrow":$ Sei $R$ ein Körper. Die Existenz des Nullideals $(0)$ und des Einsideals $(1)$
+ist trivial, da $R$ nicht der Nullring ist. Nehmen wir an, dass es ein weiteres Ideal gibt, dann können wir,
+wie oben mit dem \emph{übereifrigen} Erzeuger argumentieren, der die ganze Menge erzeugt, welche das Einsideal
+ist.
+
+\vspace{0.7em}
+$"\Leftarrow":$ Sei $R$ ein Ring mit genau zwei Idealen. Zu zeigen seien $0\ne1$ und $a^{-1}$ existiert für
+alle $a\in R\setminus 0$. $0=1$ tritt nur im Nullring auf. Da wir jedoch zwei Ideale haben, können wir nicht im
+Nullring sein. Unsere zwei Ideale müssen offensichtlich die trivialen Ideale sein. Da $a\ne0$ gilt auch
+$(a)\ne(0)$. Da wir nur zwei Ideale haben, gilt nach dem Ausschlussprinzip $(a)=(1)$. Nach Definition des Ideals gibt uns das
+$aR=(1)$. Haben also gezeigt, dass $aR$ jedes Element der Menge annehmen kann, und somit auch $1$. In dem Fall
+haben wir unser Inverses gefunden, denn $ar=1$ ist genau, dass was wir gesucht haben.
+\end{proof}
+
+\begin{cor}
+Sei $k$ Körper und $R$ Ring, dann ist jeder Ringhomomorphismus $\varphi:k\to R$ entweder injektiv oder die
+Nullabbildung.
+\end{cor}
+\begin{proof}
+Wissen, dass der Kern ein Ideal von $k$ sein muss. Da $k$ ein Körper ist, gilt also $\mathrm{Ker}(\varphi)=(0)$
+oder $\mathrm{Ker}(\varphi)=(1)$. Ist $\mathrm{Kern}(\varphi)=(0)$ folgt Injektivität. Ist
+$\mathrm{Kern}(\varphi)=(1)$, haben wir die Nullabbildung und $R$ \emph{muss} der Nullring sein.
+\end{proof}
+
+\begin{satz}
+Jedes Ideal im Ring der ganzen Zahlen $\mathbb Z$ ist ein Hauptideal.
+\end{satz}
+\begin{proof}
+Allen Untergruppen von $\mathbb Z^+$ nehmen die Form $n\mathbb Z$ an. Das sind bereits die Ideale.
+\end{proof}
+
+\begin{anm}
+Versucht man ein Ideal mit einer beliebigen Menge an Zahlen $I$ zu generieren, lässt sich dieses Ideal durch
+$(\mathrm{ggT}(I))$ als Hauptideal ausdrücken.
+\end{anm}
+
+Als letztes möchte ich noch zeigen, wie man den Begriff der \emph{Charakteristik} formal mit Ringhomomorphismen
+definieren kann.
+
+\begin{definition}[Charakteristik]
+Sei $\varphi: \mathbb Z\to R$ der eindeutig bestimmte Ringhomomorphismus in einen Ring $R$. Wir definieren die
+\emph{Charakteristik} $p\in\mathbb N_0$ von $R$ als
+\[\begin{cases}
+    0, &\text{falls Kern}(\varphi)=(0); \\
+    \min\left(\{a\in \mathrm{Ker}(\varphi) \mid a\in\mathbb N\}\right), &\text{sonst.}
+\end{cases}\]
+\end{definition}
+$\mathbb Z$, $\mathbb Q$, $\mathbb R$, $\mathbb C$ haben alle die Charakteristik $p=0$.
+Der Nullring hat Charakterstik $p=1$. Die Primkörper $\mathbb F_{p}$ und ihre Körpererweiterungen haben
+die Charakteristik $p$. Das nur so als kleine beispielhafte Liste.
+
+\vspace{3em}
+\emph{Abschließende Worte}.
+Ideale haben eine sehr große Relevanz in der Mathematik. Sie ermöglichen einem die Konstruktion der
+Restklassenringe und Quotientenkörper, sind also daher ein unverzichtbarer Teil des
+Werkzeugkasten der reinen Mathematik. Dieses Thema wird jedoch im nächsten Vortrag angesprochen, deshalb
+möchte ich da nicht zu viel davon vorwegnehmen. Vielen Dank, für's Lesen und der Freude am Mathematisieren!
+
+\end{document}
